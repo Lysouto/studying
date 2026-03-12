@@ -8,11 +8,11 @@ chosen = random.randint(1,100)
 guess = 0
 
 while True:
-    guess = int(input("Guess the number:"))
+    guess = int(input("Guess the number: "))
     if guess > chosen: 
-        print("Guess lower.")
+        print("Guess lower. ")
     elif guess < chosen:
-        print("Guess higher")
+        print("Guess higher. ")
     else:
         print("Congratulations, you've guessed the number!" )
         break
