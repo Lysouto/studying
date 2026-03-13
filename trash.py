@@ -1,0 +1,1 @@
+print("não sobra nada pro betinha")
