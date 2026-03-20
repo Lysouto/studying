@@ -18,22 +18,24 @@ while True:
         continue
     try:
         if choice == 1:
-            print(f"Checking... You currently have ${balance}.")
+            print(f"Checking... You currently have ${balance:.2f}.")
         elif choice == 2:
             valueadded = float(input("Type the amout to deposit: $"))
             balance += valueadded
+            print(f"Transaction successful. Your new balance is ${balance:.2f}.")
         elif choice == 3:
             valuedecreased = float(input("type the amount to withdraw: $"))
             balance -= valuedecreased
+            print(f"Your new balance is: {balance:.2f}")
             if balance < 0:
-                print("You don't have that much money. Transaction cancelled.")
+                print("You don't have that much money.")
                 balance += valuedecreased
                 choice2 =input("Do you want to proceed with the transaction knowing you'll be in debt? (y/n) ")
                 if choice2 == "y":
                     balance -= valuedecreased
-                    print(f"Transaction successful. Your new balance is ${balance}.")
+                    print(f"Transaction successful. Your new balance is ${balance:.2f}.")
                 else:
-                    print("Transaction cancelled.")
+                    print(f"Transaction cancelled. Your balance is still ${balance:.2f}.")
         elif choice == 4:
             print("Thanks for using Mini ATM. Goodbye!")
             break
