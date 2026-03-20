@@ -14,7 +14,7 @@ while True:
         "3 withdraw \n" \
         "4 exit "))
     except ValueError:
-        print("Error. Type a number between 1 and 4 to choose an option ")
+        print("Error. Type a number between 1 and 4 to choose an option. ")
         continue
     try:
         if choice == 1:
@@ -38,7 +38,7 @@ while True:
             print("Thanks for using Mini ATM. Goodbye!")
             break
         else:
-            print("Error. That's not a valid option.")
+            print("Error. Type a number between 1 and 4 to choose an option. ")
     except ValueError:
         print("Error. That's not a valid option.")
         continue
