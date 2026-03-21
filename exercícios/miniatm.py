@@ -21,12 +21,14 @@ while True:
             print(f"Checking... You currently have ${balance:.2f}.")
         elif choice == 2:
             valueadded = float(input("Type the amout to deposit: $"))
+            if valueadded < 0:
+                print("Error. You can't deposit a negative amount.")
+                continue
             balance += valueadded
             print(f"Transaction successful. Your new balance is ${balance:.2f}.")
         elif choice == 3:
             valuedecreased = float(input("type the amount to withdraw: $"))
             balance -= valuedecreased
-            print(f"Your new balance is: {balance:.2f}")
             if balance < 0:
                 print("You don't have that much money.")
                 balance += valuedecreased
@@ -36,6 +38,8 @@ while True:
                     print(f"Transaction successful. Your new balance is ${balance:.2f}.")
                 else:
                     print(f"Transaction cancelled. Your balance is still ${balance:.2f}.")
+            else:
+                print(f"Transaction successful. Your new balance is {balance:.2f}") #trying to fix ghost message
         elif choice == 4:
             print("Thanks for using Mini ATM. Goodbye!")
             break
