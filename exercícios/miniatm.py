@@ -5,8 +5,18 @@ The user can choose to Check Balance, Deposit money, Withdraw money, or Exit."""
 # Starting account balance for the Mini ATM.
 balance = 100
 
+# Asks person to type their user. 
+user = input("Type your user to start: ")
+
 # Welcome message shown once when the program starts.
-print("Welcome to Mini ATM!")
+def welcome_user(user):
+    print(f"Welcome to Mini ATM, {user}!")
+
+def goodbye_user(user):
+    print(f"Thanks for using Mini ATM, {user}. Goodbye!")
+
+
+welcome_user(user)
 
 # Main loop: keep showing the menu until the user chooses to exit.
 while True:
@@ -57,7 +67,7 @@ while True:
                 print(f"Transaction successful. Your new balance is {balance:.2f}")
         elif choice == 4:
             # Option 4: exit the program.
-            print("Thanks for using Mini ATM. Goodbye!")
+            goodbye_user(user)
             break
         else:
             # Choice outside of the valid menu options.
