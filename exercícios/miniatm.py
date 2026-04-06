@@ -66,5 +66,3 @@ while True:
         # Handle invalid numeric conversion during transaction input.
         print("Error. That's not a valid option.")
         continue
-
-# meeh I tried...
