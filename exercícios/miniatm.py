@@ -15,6 +15,9 @@ def welcome_user(user):
 def goodbye_user(user):
     print(f"Thanks for using Mini ATM, {user}. Goodbye!")
 
+def show_balance(balance):
+    print(f"You currently have ${balance:.2f}")
+
 
 welcome_user(user)
 
@@ -36,7 +39,7 @@ while True:
     try:
         if choice == 1:
             # Option 1: display the current balance.
-            print(f"Checking... You currently have ${balance:.2f}.")
+            show_balance(balance)
         elif choice == 2:
             # Option 2: deposit money into the account.
             valueadded = float(input("Type the amout to deposit: $"))
@@ -45,7 +48,8 @@ while True:
                 print("Error. You can't deposit a negative amount.")
                 continue
             balance += valueadded
-            print(f"Transaction successful. Your new balance is ${balance:.2f}.")
+            print(f"Transaction successful.")
+            show_balance(balance)
         elif choice == 3:
             # Option 3: withdraw money from the account.
             valuedecreased = float(input("type the amount to withdraw: $"))
@@ -58,13 +62,16 @@ while True:
                 if choice2 == "y":
                     # User agrees to go into debt, so apply the withdrawal.
                     balance -= valuedecreased
-                    print(f"Transaction successful. Your new balance is ${balance:.2f}.")
+                    print(f"Transaction successful. ")
+                    show_balance(balance)
                 else:
                     # User cancels the withdrawal, keep the original balance.
-                    print(f"Transaction cancelled. Your balance is still ${balance:.2f}.")
+                    print(f"Transaction cancelled. ")
+                    show_balance(balance)
             else:
                 # Successful withdrawal without overdraft.
-                print(f"Transaction successful. Your new balance is {balance:.2f}")
+                print(f"Transaction successful. ")
+                show_balance(balance)
         elif choice == 4:
             # Option 4: exit the program.
             goodbye_user(user)
