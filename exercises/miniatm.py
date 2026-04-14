@@ -1,6 +1,11 @@
-"""🏦 The Exercise: "The Mini-ATM"
-The Goal: Create a program that starts with a balance of $100. 
-The user can choose to Check Balance, Deposit money, Withdraw money, or Exit."""
+"""
+Project: The Mini-ATM
+Goal: A terminal-based banking simulator to practice core programming logic.
+Key Features:
+- Balance management starting at $100.
+- Operations: Check Balance, Deposit, Withdraw, and Exit.
+- Technical focus: Input validation, float formatting, and loop control flow.
+"""
 
 # Starting account balance for the Mini ATM.
 balance = 100
