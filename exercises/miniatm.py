@@ -6,6 +6,7 @@ Key Features:
 - Operations: Check Balance, Deposit, Withdraw, and Exit.
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
+import math
 
 # Starting account balance for the Mini ATM.
 balance = 100
@@ -22,6 +23,39 @@ def goodbye_user(user):
 
 def show_balance(balance):
     print(f"You currently have ${balance:.2f}")
+
+def deposit(balance):
+    valueadded = float(input("Type the amout to deposit: $"))
+    if valueadded < 0:
+        print("Error. You can't deposit a negative amount.")
+        return balance
+    balance += valueadded
+    print(f"Transaction successful.")
+    show_balance(balance)
+    return balance
+
+def withdraw(balance):
+    valuedecreased = float(input("type the amount to withdraw: $"))
+    balance -= valuedecreased
+    if balance < 0:
+        # If the withdrawal causes a negative balance, warn the user.
+        print("You don't have that much money.")
+        balance += valuedecreased
+        choice2 = input("Do you want to proceed with the transaction knowing you'll be in debt? (y/n) ")
+        if choice2 == "y":
+            # User agrees to go into debt, so apply the withdrawal.
+            balance -= valuedecreased
+            print(f"Transaction successful. ")
+            show_balance(balance)
+        else:
+            # User cancels the withdrawal, keep the original balance.
+            print(f"Transaction cancelled. ")
+            show_balance(balance)
+    else:
+        # Successful withdrawal without overdraft.
+        print(f"Transaction successful. ")
+        show_balance(balance)
+
 
 
 welcome_user(user)
@@ -47,36 +81,10 @@ while True:
             show_balance(balance)
         elif choice == 2:
             # Option 2: deposit money into the account.
-            valueadded = float(input("Type the amout to deposit: $"))
-            if valueadded < 0:
-                # Prevent negative deposits.
-                print("Error. You can't deposit a negative amount.")
-                continue
-            balance += valueadded
-            print(f"Transaction successful.")
-            show_balance(balance)
+            balance = deposit(balance)
         elif choice == 3:
             # Option 3: withdraw money from the account.
-            valuedecreased = float(input("type the amount to withdraw: $"))
-            balance -= valuedecreased
-            if balance < 0:
-                # If the withdrawal causes a negative balance, warn the user.
-                print("You don't have that much money.")
-                balance += valuedecreased
-                choice2 = input("Do you want to proceed with the transaction knowing you'll be in debt? (y/n) ")
-                if choice2 == "y":
-                    # User agrees to go into debt, so apply the withdrawal.
-                    balance -= valuedecreased
-                    print(f"Transaction successful. ")
-                    show_balance(balance)
-                else:
-                    # User cancels the withdrawal, keep the original balance.
-                    print(f"Transaction cancelled. ")
-                    show_balance(balance)
-            else:
-                # Successful withdrawal without overdraft.
-                print(f"Transaction successful. ")
-                show_balance(balance)
+            balance = withdraw(balance)
         elif choice == 4:
             # Option 4: exit the program.
             goodbye_user(user)
