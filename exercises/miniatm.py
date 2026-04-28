@@ -6,12 +6,59 @@ Key Features:
 - Operations: Check Balance, Deposit, Withdraw, and Exit.
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
+import math
 
 # Starting account balance for the Mini ATM.
 balance = 100
 
+# Asks person to type their user. 
+user = input("Type your user to start: ")
+
 # Welcome message shown once when the program starts.
-print("Welcome to Mini ATM!")
+def welcome_user(user):
+    print(f"Welcome to Mini ATM, {user}!")
+
+def goodbye_user(user):
+    print(f"Thanks for using Mini ATM, {user}. Goodbye!")
+
+def show_balance(balance):
+    print(f"You currently have ${balance:.2f}")
+
+def deposit(balance):
+    valueadded = float(input("Type the amout to deposit: $"))
+    if valueadded < 0:
+        print("Error. You can't deposit a negative amount.")
+        return balance
+    balance += valueadded
+    print(f"Transaction successful.")
+    show_balance(balance)
+    return balance
+
+def withdraw(balance):
+    valuedecreased = float(input("type the amount to withdraw: $"))
+    balance -= valuedecreased
+    if balance < 0:
+        # If the withdrawal causes a negative balance, warn the user.
+        print("You don't have that much money.")
+        balance += valuedecreased
+        choice2 = input("Do you want to proceed with the transaction knowing you'll be in debt? (y/n) ")
+        if choice2 == "y":
+            # User agrees to go into debt, so apply the withdrawal.
+            balance -= valuedecreased
+            print(f"Transaction successful. ")
+            show_balance(balance)
+        else:
+            # User cancels the withdrawal, keep the original balance.
+            print(f"Transaction cancelled. ")
+            show_balance(balance)
+    else:
+        # Successful withdrawal without overdraft.
+        print(f"Transaction successful. ")
+        show_balance(balance)
+
+
+
+welcome_user(user)
 
 # Main loop: keep showing the menu until the user chooses to exit.
 while True:
@@ -31,38 +78,16 @@ while True:
     try:
         if choice == 1:
             # Option 1: display the current balance.
-            print(f"Checking... You currently have ${balance:.2f}.")
+            show_balance(balance)
         elif choice == 2:
             # Option 2: deposit money into the account.
-            valueadded = float(input("Type the amout to deposit: $"))
-            if valueadded < 0:
-                # Prevent negative deposits.
-                print("Error. You can't deposit a negative amount.")
-                continue
-            balance += valueadded
-            print(f"Transaction successful. Your new balance is ${balance:.2f}.")
+            balance = deposit(balance)
         elif choice == 3:
             # Option 3: withdraw money from the account.
-            valuedecreased = float(input("type the amount to withdraw: $"))
-            balance -= valuedecreased
-            if balance < 0:
-                # If the withdrawal causes a negative balance, warn the user.
-                print("You don't have that much money.")
-                balance += valuedecreased
-                choice2 = input("Do you want to proceed with the transaction knowing you'll be in debt? (y/n) ")
-                if choice2 == "y":
-                    # User agrees to go into debt, so apply the withdrawal.
-                    balance -= valuedecreased
-                    print(f"Transaction successful. Your new balance is ${balance:.2f}.")
-                else:
-                    # User cancels the withdrawal, keep the original balance.
-                    print(f"Transaction cancelled. Your balance is still ${balance:.2f}.")
-            else:
-                # Successful withdrawal without overdraft.
-                print(f"Transaction successful. Your new balance is {balance:.2f}")
+            balance = withdraw(balance)
         elif choice == 4:
             # Option 4: exit the program.
-            print("Thanks for using Mini ATM. Goodbye!")
+            goodbye_user(user)
             break
         else:
             # Choice outside of the valid menu options.
