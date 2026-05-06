@@ -18,12 +18,15 @@ user = input("Type your user to start: ")
 def welcome_user(user):
     print(f"Welcome to Mini ATM, {user}!")
 
+# Goodbye message shown when the user chooses to exit the program.
 def goodbye_user(user):
     print(f"Thanks for using Mini ATM, {user}. Goodbye!")
 
+# Function to display the current balance, formatted to 2 decimal places.
 def show_balance(balance):
     print(f"You currently have ${balance:.2f}")
 
+# Function to handle deposits, including input validation for negative amounts.
 def deposit(balance):
     valueadded = float(input("Type the amout to deposit: $"))
     if valueadded < 0:
@@ -34,6 +37,7 @@ def deposit(balance):
     show_balance(balance)
     return balance
 
+# Function to handle withdrawals, including checks for overdraft and user confirmation if the withdrawal exceeds the current balance.
 def withdraw(balance):
     valuedecreased = float(input("type the amount to withdraw: $"))
     balance -= valuedecreased
