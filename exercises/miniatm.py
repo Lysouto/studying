@@ -73,21 +73,21 @@ passwords ={
 balance = 100
 
 # Asks person to type their user. 
-user = input("Type your user to start: ")
-
-if user in accounts:
-    current_user = user
-    password = input("Type your password: ")
-    # In a real application, you would check the password here.
-    if password == passwords[current_user]:  # Replace with actual password checking logic
-        balance = accounts[current_user]
-        welcome_user(current_user)
+while True:
+    user = input("Type your user to start: ")
+    if user in accounts:
+        current_user = user
+        password = input("Type your password: ")
+        # In a real application, you would check the password here.
+        if password == passwords[current_user]:  # Replace with actual password checking logic
+            balance = accounts[current_user]
+            welcome_user(current_user)
+            break
+        else:
+            print("Incorrect password.")
     else:
-        print("Incorrect password.")
-else:
-    print("User not found. Starting with a default balance of $100.")
-    current_user = user
-    welcome_user(current_user)
+        print("User not found. Please try again.")
+
     
 
 
