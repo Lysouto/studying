@@ -8,12 +8,6 @@ Key Features:
 """
 import math
 
-# Starting account balance for the Mini ATM.
-balance = 100
-
-# Asks person to type their user. 
-user = input("Type your user to start: ")
-
 # Welcome message shown once when the program starts.
 def welcome_user(user):
     print(f"Welcome to Mini ATM, {user}!")
@@ -60,9 +54,43 @@ def withdraw(balance):
         print(f"Transaction successful. ")
         show_balance(balance)
 
+# Login state
+
+# User accounts with their respective balances (for future expansion).
+accounts = {
+    "gamer": 100.00,
+    "user2": 150.00,
+    "admin": 9999.00
+}
+
+passwords ={
+    "gamer": "password123",
+    "user2": "password456",
+    "admin": "password789"
+}
+
+# Starting account balance for the Mini ATM.
+balance = 100
+
+# Asks person to type their user. 
+user = input("Type your user to start: ")
+
+if user in accounts:
+    current_user = user
+    password = input("Type your password: ")
+    # In a real application, you would check the password here.
+    if password == passwords[current_user]:  # Replace with actual password checking logic
+        balance = accounts[current_user]
+        welcome_user(current_user)
+    else:
+        print("Incorrect password.")
+else:
+    print("User not found. Starting with a default balance of $100.")
+    current_user = user
+    welcome_user(current_user)
+    
 
 
-welcome_user(user)
 
 # Main loop: keep showing the menu until the user chooses to exit.
 while True:
