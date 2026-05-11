@@ -56,7 +56,7 @@ def withdraw(balance):
 
 # Login state
 
-# User accounts with their respective balances (for future expansion).
+# User accounts with their respective balances.
 accounts = {
     "gamer": 100.00,
     "user2": 150.00,
@@ -69,17 +69,13 @@ passwords ={
     "admin": "password789"
 }
 
-# Starting account balance for the Mini ATM.
-balance = 100
-
 # Asks person to type their user. 
 while True:
     user = input("Type your user to start: ")
     if user in accounts:
         current_user = user
         password = input("Type your password: ")
-        # In a real application, you would check the password here.
-        if password == passwords[current_user]:  # Replace with actual password checking logic
+        if password == passwords[current_user]:
             balance = accounts[current_user]
             welcome_user(current_user)
             break
