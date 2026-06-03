@@ -9,6 +9,11 @@ Key Features:
 import math
 import json
 # Welcome message shown once when the program starts.
+
+def save_database(data):
+    with open("exercises/mini atm/registry.json", "w") as file:
+              json.dump(data, file, indent=4)
+
 def welcome_user(user):
     print(f"Welcome to Mini ATM, {user}!")
 
@@ -107,19 +112,34 @@ while True:
         if choice == 1:
             # Option 1: display the current balance.
             show_balance(balance)
+
         elif choice == 2:
             # Option 2: deposit money into the account.
             balance = deposit(balance)
+            
+            # Update the master dictionary in memory
+            accounts[current_user]["balance"] = balance
+            # Save the updated master dictionary to the physical file
+            save_database(accounts) 
+
         elif choice == 3:
             # Option 3: withdraw money from the account.
             balance = withdraw(balance)
+
+            # Update the master dictionary in memory
+            accounts[current_user]["balance"] = balance
+             # Save the updated master dictionary to the physical file
+            save_database(accounts)
+
         elif choice == 4:
             # Option 4: exit the program.
             goodbye_user(user)
             break
+
         else:
             # Choice outside of the valid menu options.
             print("Error. Type a number between 1 and 4 to choose an option. ")
+        
     except ValueError:
         # Handle invalid numeric conversion during transaction input.
         print("Error. That's not a valid option.")
