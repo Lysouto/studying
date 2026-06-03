@@ -7,8 +7,13 @@ Key Features:
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
 import math
-
+import json
 # Welcome message shown once when the program starts.
+
+def save_database(data):
+    with open("exercises/mini atm/registry.json", "w") as file:
+              json.dump(data, file, indent=4)
+
 def welcome_user(user):
     print(f"Welcome to Mini ATM, {user}!")
 
@@ -56,35 +61,35 @@ def withdraw(balance):
 
 # Login state
 
-# User accounts with their respective balances.
-accounts = {
-    "gamer": 100.00,
-    "user2": 150.00,
-    "admin": 9999.00
-}
+# User accounts and its data.
+with open("exercises/mini atm/registry.json", "r") as file:
+    accounts = json.load(file)
 
-passwords ={
-    "gamer": "password123",
-    "user2": "password456",
-    "admin": "password789"
-}
 
-# Asks person to type their user. 
+# Login loop
+
+# Asks person to type their user:
 while True:
-    user = input("Type your user to start: ")
+    user = input("Type your user to start: ").strip()
+
+    # 1. Check if the username exists in the accounts database
     if user in accounts:
         current_user = user
-        password = input("Type your password: ")
-        if password == passwords[current_user]:
-            balance = accounts[current_user]
+        password = input("Type your password: ").strip()
+
+        #2 Get the correct password from inside that account
+        if password == accounts[current_user]["password"]:
+
+            #3 Get their balance from inside that account
+            balance = accounts[current_user]["balance"]
+
             welcome_user(current_user)
             break
         else:
             print("Incorrect password.")
     else:
-        print("User not found. Please try again.")
-
-    
+        print("User not found. Please try again")
+ 
 
 
 
@@ -107,19 +112,34 @@ while True:
         if choice == 1:
             # Option 1: display the current balance.
             show_balance(balance)
+
         elif choice == 2:
             # Option 2: deposit money into the account.
             balance = deposit(balance)
+            
+            # Update the master dictionary in memory
+            accounts[current_user]["balance"] = balance
+            # Save the updated master dictionary to the physical file
+            save_database(accounts) 
+
         elif choice == 3:
             # Option 3: withdraw money from the account.
             balance = withdraw(balance)
+
+            # Update the master dictionary in memory
+            accounts[current_user]["balance"] = balance
+             # Save the updated master dictionary to the physical file
+            save_database(accounts)
+
         elif choice == 4:
             # Option 4: exit the program.
             goodbye_user(user)
             break
+
         else:
             # Choice outside of the valid menu options.
             print("Error. Type a number between 1 and 4 to choose an option. ")
+        
     except ValueError:
         # Handle invalid numeric conversion during transaction input.
         print("Error. That's not a valid option.")
