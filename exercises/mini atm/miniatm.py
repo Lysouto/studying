@@ -62,7 +62,7 @@ accounts = {
     "user2": 150.00,
     "admin": 9999.00
 }
-
+ 
 passwords ={
     "gamer": "password123",
     "user2": "password456",
