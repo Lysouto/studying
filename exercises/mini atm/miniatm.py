@@ -7,7 +7,7 @@ Key Features:
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
 import math
-
+import json
 # Welcome message shown once when the program starts.
 def welcome_user(user):
     print(f"Welcome to Mini ATM, {user}!")
@@ -56,35 +56,35 @@ def withdraw(balance):
 
 # Login state
 
-# User accounts with their respective balances.
-accounts = {
-    "gamer": 100.00,
-    "user2": 150.00,
-    "admin": 9999.00
-}
- 
-passwords ={
-    "gamer": "password123",
-    "user2": "password456",
-    "admin": "password789"
-}
+# User accounts and its data.
+with open("exercises/mini atm/registry.json", "r") as file:
+    accounts = json.load(file)
 
-# Asks person to type their user. 
+
+# Login loop
+
+# Asks person to type their user:
 while True:
-    user = input("Type your user to start: ")
+    user = input("Type your user to start: ").strip()
+
+    # 1. Check if the username exists in the accounts database
     if user in accounts:
         current_user = user
-        password = input("Type your password: ")
-        if password == passwords[current_user]:
-            balance = accounts[current_user]
+        password = input("Type your password: ").strip()
+
+        #2 Get the correct password from inside that account
+        if password == accounts[current_user]["password"]:
+
+            #3 Get their balance from inside that account
+            balance = accounts[current_user]["balance"]
+
             welcome_user(current_user)
             break
         else:
             print("Incorrect password.")
     else:
-        print("User not found. Please try again.")
-
-    
+        print("User not found. Please try again")
+ 
 
 
 
