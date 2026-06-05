@@ -6,14 +6,40 @@ Key Features:
 - Operations: Check Balance, Deposit, Withdraw, and Exit.
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
+#Libraries-------------------------------------------------
 import math
 import json
-# Welcome message shown once when the program starts.
 
+# Functions and definitions --------------------------------------------------------
+
+def normalize_username(name):
+    return name.strip().casefold()
+
+# Create a new user with an unique username
+def create_user():
+    while True:
+        new_user = input("Create a username: ").strip()
+        normalized_user = normalize_username(new_user)
+        if normalized_user in accounts:
+            print("Error. User already exists. Try again. ")
+            continue
+        else:
+            new_pass = input("Create a password: ")
+            accounts[normalized_user] = {
+                "password": new_pass,
+                "balance": 0.0,
+                "display_name": new_user
+            }
+            save_database(accounts)
+            print(f"User {new_user} created successfully. you can now Login.")
+            break
+
+# Save data whether it's a new user or an updated balance.
 def save_database(data):
     with open("exercises/mini atm/registry.json", "w") as file:
               json.dump(data, file, indent=4)
 
+# Welcome message shown once when the program starts.
 def welcome_user(user):
     print(f"Welcome to Mini ATM, {user}!")
 
@@ -59,22 +85,52 @@ def withdraw(balance):
         print(f"Transaction successful. ")
         show_balance(balance)
 
-# Login state
 
-# User accounts and its data.
+# Login state -----------------------------------------------------------------------
+
+# Loading accounts data to read.
 with open("exercises/mini atm/registry.json", "r") as file:
-    accounts = json.load(file)
+    loaded_accounts = json.load(file)
+
+accounts = {}
+for username, data in loaded_accounts.items():
+    normalized = username.casefold()
+    data.setdefault("display_name", username)
+    accounts[normalized] = data
+
+# Giving user choice to log in or create a new account:
+while True:
+    try:
+        choicelog = int(input(
+        "Type the number of what you want to do:\n" \
+        "1 Log in \n" \
+        "2 Create account \n" \
+        "3 Exit\n"))
+    except ValueError:
+        # Handle non-numeric menu input.
+        print("Error. Type a number between 1 and 3 to choose an option. ")
+        continue
+    break
+
+if choicelog == 2:
+    create_user()
+elif choicelog == 3:
+    print("Exiting Mini ATM.")
+    exit()
 
 
-# Login loop
+
+
+# Login existing account loop
 
 # Asks person to type their user:
 while True:
     user = input("Type your user to start: ").strip()
+    normalized_user = normalize_username(user)
 
     # 1. Check if the username exists in the accounts database
-    if user in accounts:
-        current_user = user
+    if normalized_user in accounts:
+        current_user = normalized_user
         password = input("Type your password: ").strip()
 
         #2 Get the correct password from inside that account
@@ -83,7 +139,7 @@ while True:
             #3 Get their balance from inside that account
             balance = accounts[current_user]["balance"]
 
-            welcome_user(current_user)
+            welcome_user(accounts[current_user].get("display_name", user))
             break
         else:
             print("Incorrect password.")
