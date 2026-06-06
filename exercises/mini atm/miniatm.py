@@ -6,7 +6,8 @@ Key Features:
 - Operations: Check Balance, Deposit, Withdraw, and Exit.
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
-#Libraries--------------------------------------------------------
+#Libraries--------------------------------------------------------------------------
+
 import math
 import json
 
@@ -106,12 +107,9 @@ elif choicelog == 3:
     exit()
 
 
-
-
 # Login existing account loop
-
-# Asks person to type their user:
 while True:
+    # Asks person to type their user:
     user = input("Type your user to start: ").strip().lower()
 
     # 1. Check if the username exists in the accounts database
@@ -134,6 +132,7 @@ while True:
  
 
 
+# Main ----------------------------------------------------------------------------
 
 # Main loop: keep showing the menu until the user chooses to exit.
 while True:
@@ -161,6 +160,7 @@ while True:
             
             # Update the master dictionary in memory
             accounts[current_user]["balance"] = balance
+            
             # Save the updated master dictionary to the physical file
             save_database(accounts) 
 
@@ -170,6 +170,7 @@ while True:
 
             # Update the master dictionary in memory
             accounts[current_user]["balance"] = balance
+            
              # Save the updated master dictionary to the physical file
             save_database(accounts)
 
