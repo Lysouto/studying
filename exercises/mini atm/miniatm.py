@@ -6,14 +6,33 @@ Key Features:
 - Operations: Check Balance, Deposit, Withdraw, and Exit.
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
+#Libraries--------------------------------------------------------
 import math
 import json
-# Welcome message shown once when the program starts.
 
+# Functions and definitions --------------------------------------------------------
+
+# Create a new user with an unique username
+def create_user(new_user):
+    new_user = input("Create a username: ").strip().lower()
+    while True:
+        if new_user in accounts:
+            print("Error. User already exists. Try again. ")
+            new_user = input("Create a username: ").strip().lower()
+            continue
+        else:
+            new_pass = input("Create a password: ")
+            accounts[new_user] = {"password": new_pass, "balance": 000.0}
+            save_database(accounts)
+            print(f"User {new_user} created successfully. you can now Login.")
+            break
+
+# Save data whether it's a new user or an updated balance.
 def save_database(data):
     with open("exercises/mini atm/registry.json", "w") as file:
               json.dump(data, file, indent=4)
 
+# Welcome message shown once when the program starts.
 def welcome_user(user):
     print(f"Welcome to Mini ATM, {user}!")
 
@@ -59,18 +78,41 @@ def withdraw(balance):
         print(f"Transaction successful. ")
         show_balance(balance)
 
-# Login state
 
-# User accounts and its data.
+# Login state -----------------------------------------------------------------------
+
+# Loading accounts data to read.
 with open("exercises/mini atm/registry.json", "r") as file:
     accounts = json.load(file)
 
+# Giving user choice to log in or create a new account:
+while True:
+    try:
+        choicelog = int(input(
+        "Type the number of what you want to do:\n" \
+        "1 Log in \n" \
+        "2 Create account \n" \
+        "3 Exit\n"))
+    except ValueError:
+        # Handle non-numeric menu input.
+        print("Error. Type a number between 1 and 3 to choose an option. ")
+        continue
+    break
 
-# Login loop
+if choicelog == 2:
+    create_user(accounts)
+elif choicelog == 3:
+    print("Exiting Mini ATM.")
+    exit()
+
+
+
+
+# Login existing account loop
 
 # Asks person to type their user:
 while True:
-    user = input("Type your user to start: ").strip()
+    user = input("Type your user to start: ").strip().lower()
 
     # 1. Check if the username exists in the accounts database
     if user in accounts:
