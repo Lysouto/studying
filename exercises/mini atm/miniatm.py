@@ -11,10 +11,10 @@ Key Features:
 import math
 import json
 
-# Functions and definitions --------------------------------------------------------
+# Functions and definitions ---------------------------------------------------------
 
 # Create a new user with an unique username
-def create_user(new_user):
+def create_user():
     new_user = input("Create a username: ").strip().lower()
     while True:
         if new_user in accounts:
@@ -43,6 +43,7 @@ def goodbye_user(user):
 
 # Function to display the current balance, formatted to 2 decimal places.
 def show_balance(balance):
+
     print(f"You currently have ${balance:.2f}")
 
 # Function to handle deposits, including input validation for negative amounts.
@@ -101,13 +102,14 @@ while True:
     break
 
 if choicelog == 2:
-    create_user(accounts)
+    create_user()
 elif choicelog == 3:
     print("Exiting Mini ATM.")
     exit()
 
 
 # Login existing account loop
+
 while True:
     # Asks person to type their user:
     user = input("Type your user to start: ").strip().lower()
@@ -128,9 +130,33 @@ while True:
         else:
             print("Incorrect password.")
     else:
-        print("User not found. Please try again")
- 
+        print("User not found. Please try again or Create a new account.")
 
+        while True:
+            try:
+                try_or_create = int(input("Type the number of what you want to do:\n" \
+                "1 Try again\n" \
+                "2 Create new account\n"
+                "3 Exit\n"))
+                if try_or_create in [1, 2, 3]:
+                    break
+                else:
+                    print("Error. Type 1, 2, or 3 to choose an option. ")
+            # Handle non-numeric menu input
+            except ValueError:
+                print("Error. That's not a valid option. \n" \
+                " Type 1 to try again or 2 to create new account. ")
+
+        if try_or_create == 2:
+            create_user()
+        elif try_or_create == 3:
+            print("Exiting Mini ATM.")
+            exit()
+        continue
+
+            
+            
+                
 
 # Main ----------------------------------------------------------------------------
 
