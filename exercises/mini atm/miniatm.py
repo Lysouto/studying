@@ -6,7 +6,7 @@ Key Features:
 - Operations: Check Balance, Deposit, Withdraw, and Exit.
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
-#Libraries-------------------------------------------------
+#Libraries--------------------------------------------------------
 import math
 import json
 
@@ -14,11 +14,11 @@ import json
 
 # Create a new user with an unique username
 def create_user(new_user):
-    new_user = input("Create a username: ").strip()
+    new_user = input("Create a username: ").strip().lower()
     while True:
         if new_user in accounts:
             print("Error. User already exists. Try again. ")
-            new_user = input("Create a username: ").strip()
+            new_user = input("Create a username: ").strip().lower()
             continue
         else:
             new_pass = input("Create a password: ")
@@ -112,7 +112,7 @@ elif choicelog == 3:
 
 # Asks person to type their user:
 while True:
-    user = input("Type your user to start: ").strip()
+    user = input("Type your user to start: ").strip().lower()
 
     # 1. Check if the username exists in the accounts database
     if user in accounts:
