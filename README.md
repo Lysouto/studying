@@ -19,4 +19,4 @@ This repository contains exercises and projects focused on learning programming 
 ## Contributing
 Feel free to share improvements and additional examples!
 
-Happy coding! 💻
+Happy coding!
