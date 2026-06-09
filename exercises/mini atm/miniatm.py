@@ -6,13 +6,32 @@ Key Features:
 - Operations: Check Balance, Deposit, Withdraw, and Exit.
 - Technical focus: Input validation, float formatting, and loop control flow.
 """
+#Libraries--------------------------------------------------------------------------
+
 import math
+import json
 
-# Starting account balance for the Mini ATM.
-balance = 100
+# Functions and definitions --------------------------------------------------------
 
-# Asks person to type their user. 
-user = input("Type your user to start: ")
+# Create a new user with an unique username
+def create_user(new_user):
+    new_user = input("Create a username: ").strip().lower()
+    while True:
+        if new_user in accounts:
+            print("Error. User already exists. Try again. ")
+            new_user = input("Create a username: ").strip().lower()
+            continue
+        else:
+            new_pass = input("Create a password: ")
+            accounts[new_user] = {"password": new_pass, "balance": 000.0}
+            save_database(accounts)
+            print(f"User {new_user} created successfully. you can now Login.")
+            break
+
+# Save data whether it's a new user or an updated balance.
+def save_database(data):
+    with open("exercises/mini atm/registry.json", "w") as file:
+              json.dump(data, file, indent=4)
 
 # Welcome message shown once when the program starts.
 def welcome_user(user):
@@ -61,8 +80,59 @@ def withdraw(balance):
         show_balance(balance)
 
 
+# Login state -----------------------------------------------------------------------
 
-welcome_user(user)
+# Loading accounts data to read.
+with open("exercises/mini atm/registry.json", "r") as file:
+    accounts = json.load(file)
+
+# Giving user choice to log in or create a new account:
+while True:
+    try:
+        choicelog = int(input(
+        "Type the number of what you want to do:\n" \
+        "1 Log in \n" \
+        "2 Create account \n" \
+        "3 Exit\n"))
+    except ValueError:
+        # Handle non-numeric menu input.
+        print("Error. Type a number between 1 and 3 to choose an option. ")
+        continue
+    break
+
+if choicelog == 2:
+    create_user(accounts)
+elif choicelog == 3:
+    print("Exiting Mini ATM.")
+    exit()
+
+
+# Login existing account loop
+while True:
+    # Asks person to type their user:
+    user = input("Type your user to start: ").strip().lower()
+
+    # 1. Check if the username exists in the accounts database
+    if user in accounts:
+        current_user = user
+        password = input("Type your password: ").strip()
+
+        #2 Get the correct password from inside that account
+        if password == accounts[current_user]["password"]:
+
+            #3 Get their balance from inside that account
+            balance = accounts[current_user]["balance"]
+
+            welcome_user(current_user)
+            break
+        else:
+            print("Incorrect password.")
+    else:
+        print("User not found. Please try again")
+ 
+
+
+# Main ----------------------------------------------------------------------------
 
 # Main loop: keep showing the menu until the user chooses to exit.
 while True:
@@ -83,19 +153,36 @@ while True:
         if choice == 1:
             # Option 1: display the current balance.
             show_balance(balance)
+
         elif choice == 2:
             # Option 2: deposit money into the account.
             balance = deposit(balance)
+            
+            # Update the master dictionary in memory
+            accounts[current_user]["balance"] = balance
+            
+            # Save the updated master dictionary to the physical file
+            save_database(accounts) 
+
         elif choice == 3:
             # Option 3: withdraw money from the account.
             balance = withdraw(balance)
+
+            # Update the master dictionary in memory
+            accounts[current_user]["balance"] = balance
+            
+             # Save the updated master dictionary to the physical file
+            save_database(accounts)
+
         elif choice == 4:
             # Option 4: exit the program.
             goodbye_user(user)
             break
+
         else:
             # Choice outside of the valid menu options.
             print("Error. Type a number between 1 and 4 to choose an option. ")
+        
     except ValueError:
         # Handle invalid numeric conversion during transaction input.
         print("Error. That's not a valid option.")
