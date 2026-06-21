@@ -1,5 +1,6 @@
 
 # Welcome to Logic Programming Studies 
+# Welcome to Logic Programming Studies 
 
 This repository contains exercises and projects focused on learning programming logic fundamentals.
 
