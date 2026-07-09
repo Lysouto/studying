@@ -15,5 +15,5 @@ while True:
     else:
         students.append(add)
 
-order = random.shuffle(students)
-print(f"The chosen order to the work presentation is: {order}")
+random.shuffle(students)
+print(f"The chosen order to the work presentation is: {students}")
