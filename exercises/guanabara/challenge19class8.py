@@ -6,7 +6,7 @@ the students names and showing the name of the chosen one
 
 import random 
 
-students = ["Paul", "John",]
+students = []
 
 while True:
     add = str(input("Type the name of the student to be addeed or type 0 to continue "))
